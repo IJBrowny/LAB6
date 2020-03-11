@@ -1,0 +1,110 @@
+
+from bankcard import *
+from authentication import *
+from authentication import Authentication
+from bankcard import BankCard
+
+def main():
+    card_num_list = [4319473018453644, 5555555555554444, 372357888597453, 5487573018453644]
+    cnum = input("card number")
+    print(cnum)
+    card_num = card_num_list[3]
+    card_num=int(cnum)
+    auth = Authentication()
+    card = BankCard(card_num)
+
+    verify = auth.verify_card(card_num)
+    print(verify)
+
+    details = card.get_card_details()
+    print(details)
+
+    portion = input("enter the first ")
+    Checksum=str(fportion)
+    checksum = auth.get_checksum(fportion)
+
+    print("Checksum: ", checksum)
+
+    vendor = "MasterCard, visa, American_express"
+    if vendor == 'Visa':
+        first_digit = '4'
+    elif vendor == 'MasterCard':
+        first_digit = '5'
+    elif vendor == 'American_express':
+        first_digit = '3'
+    checksum = auth.get_checksum(first_digit)
+    print("Checksum: ", checksum)
+if __name__ == '__main__':
+    main()
+
+
+import random
+class Authentication:
+    def __init__(self):
+        self.sum = 0
+
+    def verify_card(self, card_num):
+        total_even_i = 0
+        total_odd_i = 0
+        str_list = str(card_num)
+
+        for i in range((len(str_list) - 1), -1, -1):
+            if i % 2 == 0:
+                num_even_i = int(str_list[i])
+                num_even_i = num_even_i * 2
+
+                if num_even_i > 9:
+                    num_even_i = (num_even_i - 9)
+                total_even_i += num_even_i
+            else:
+                total_odd_i += int(str_list[i])
+        self.sum = total_even_i + total_odd_i
+        if self.sum % 10 == 0:
+            return "Valid"
+        else:
+            return "Invalid"
+    def get_checksum(self, first_portion):
+        first_portion = str(first_portion)
+        valid_card_lenght = 16
+        for x in range((valid_card_lenght - 1) - len(first_portion)):
+            other_portion = str(random.randint(0, 9))
+        first_portion += other_portion
+        self.verify_card(int(first_portion))
+        if self.sum % 10 == 0:
+            checksum = 0
+        else:
+            checksum = 10 - (self.sum % 10)
+        full_card = first_portion + str(checksum)
+        print("Generated Card: ", full_card)
+        print(self.verify_card(full_card))
+        return checksum (checksum is returned)
+
+from authentication import Authentication
+class BankCard:
+    def __init__(self, card_num):
+        self.card_num = card_num
+        self.vendor = self.get_vendor(self.card_num)
+    def get_vendor(self, card_num):
+        validity = Authentication().verify_card(card_num)
+        if validity == 'Valid':
+            first_digit = str(card_num)[0]
+            industry = ''
+            if first_digit == '1' or first_digit == '2':
+                industry = 'Airline'
+            elif first_digit == '3':
+                industry = 'Travel & '
+                issuer = 'American Express'
+            elif first_digit == '4' or first_digit == '5' or first_digit == '3':
+                industry = 'Banking'
+                if first_digit == '4':
+                    issuer = 'Visa'
+                elif first_digit == '5':
+                    issuer = 'MasterCard'
+                else:
+                    issuer = 'American_express'
+            return '\tIndustry: {0} \n\tIssuer: {1}'.format(industry, issuer)
+        else:
+            self.vendor = "Invalid card has no Vendor"
+            return self.vendor
+    def get_card_details(self):
+        return "\nCARD DETAILS\nCard No.: {0} \nVendor Info: \n{1}".format(self.card_num, self.vendor)
