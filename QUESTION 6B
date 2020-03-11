@@ -1,0 +1,13 @@
+Lab 6B: Python Challenge - Credit Card Verifier
+Hashes and checksums, can be found everywhere in modern database and software systems and everyday life. Credit cards are part of our everyday life, most people have at least one, and we use them to pay for goods and services in both the physical and online worlds.
+
+Credit cards and bank cards are no strangers to checksums. Your task for this challenge is to research the checksum function used for credit cards (Luhn) and to implement the algorithm so that you can check credit card numbers yourself and verify if they are valid.
+
+You're program should have a number of modes:
+
+Verify: Take a credit card number as input and output if it is a valid or invalid credit card number.
+Vendor: Again take a credit card number as input and output the issuing vendor
+Checksum: Given just the first portion of a credit card calculate the checksum (Calculate last four digits)
+Generate: Select the issuing vendor from a list, then generate a random valid credit card for that vendor.
+You may also want to look at the vendor numbers for each card
+
