@@ -1,14 +1,14 @@
-#import the hashlib library for performing hashing functions
 
 import hashlib
-seed = 'ecsc'
-challenge = 'c89aa2ffb9edcc6604005196b5f0e0e4'
 
-# Create an MD5 hash object
-hash = hashlib.md5(seed.encode()).hexdigest()
+mystring = input('Enter the text to hash: ')
 
-print(hash)
+hash1 = hashlib.md5(mystring.encode()).hexdigest()
+hash2 = "c89aa2ffb9edcc6604005196b5f0e0e4"
+print(hash1)
 
-while hash != challenge:
- hash = hashlib.md5(hash.encode()).hexdigest()
- print(hash)
+while hash1 != hash2:
+    hash1 = hashlib.md5(hash1.encode()).hexdigest()  # calculate next hash
+    print(hash1)
+
+print("done")
